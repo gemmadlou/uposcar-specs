@@ -1,0 +1,78 @@
+openapi: "3.0.0"
+info:
+  description: "A service for JSON API spec forms and submissions as a service"
+  version: "0.0.1"
+  title: "Forms service api"
+  contact:
+    email: "developers@uposcar.com"
+
+servers:
+  - url: https://api.uposcar.com/forms/v1
+
+
+paths:
+  /:
+    get:
+      summary: "Gets a collection of forms"
+      responses:
+        200:
+          description: "Collection"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Form'
+  /{id}:
+    get:
+      summary: "Gets a single form"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of form"
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+      responses:
+        200:
+          description: "Get"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+  
+    delete:
+      summary: "Deletes a form"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID of form"
+          required: true
+          schema:
+            $ref: "#/components/schemas/UUID"
+      responses:
+        202:
+          description: "Deleted"
+
+components:
+  schemas:
+    UUID:
+      type: string
+      title: Id
+      description: "uuid of the form"
+      pattern: '^\d{3}-\d{2}-\d{4}$'
+    Form:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/UUID"
+        name:
+          type: string
+          title: Name
+          description: "Form name"
+        description:
+          type: string
+          title: Description
+          description: "Form description"
+        spec:
+          $ref: "https://json-schema.org/draft/2019-09/schema"
