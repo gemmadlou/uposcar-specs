@@ -7,11 +7,11 @@ info:
     email: "developers@uposcar.com"
 
 servers:
-  - url: https://api.uposcar.com/forms/v1
+  - url: https://api.uposcar.com/forms
 
 
 paths:
-  /:
+  /v1:
     get:
       summary: "Gets a collection of forms"
       responses:
@@ -23,7 +23,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Form'
-  /{id}:
+  /v1/{id}:
     get:
       summary: "Gets a single form"
       parameters:
